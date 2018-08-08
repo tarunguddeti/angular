@@ -15,6 +15,7 @@ import {DtsFileTransformer} from '../../../ngtsc/transform';
 import {AnalyzedFile, Analyzer} from '../analyzer';
 import {IMPORT_PREFIX} from '../constants';
 import {DtsMapper} from '../host/dts_mapper';
+import {Esm2015ReflectionHost} from '../host/esm2015_host';
 import {Fesm2015ReflectionHost} from '../host/fesm2015_host';
 import {Esm5ReflectionHost} from '../host/esm5_host';
 import {NgccReflectionHost} from '../host/ngcc_host';
@@ -25,6 +26,7 @@ import {getEntryPoints} from './utils';
 import {Esm2015Renderer} from '../rendering/esm2015_renderer';
 import {Esm5Renderer} from '../rendering/esm5_renderer';
 import {FileInfo, Renderer} from '../rendering/renderer';
+import {isDefined} from '../utils';
 
 
 /**
@@ -65,7 +67,7 @@ export class PackageTransformer {
       const packageProgram = ts.createProgram([entryPoint.entryFileName], options, host);
       const typeChecker = packageProgram.getTypeChecker();
       const dtsMapper = new DtsMapper(entryPoint.entryRoot, entryPoint.dtsEntryRoot);
-      const reflectionHost = this.getHost(format, packageProgram);
+      const reflectionHost = this.getHost(format, packageProgram, dtsMapper);
 
       const parser = this.getFileParser(format, packageProgram, reflectionHost);
       const analyzer = new Analyzer(typeChecker, reflectionHost);
@@ -93,9 +95,10 @@ export class PackageTransformer {
     });
   }
 
-  getHost(format: string, program: ts.Program): NgccReflectionHost {
+  getHost(format: string, program: ts.Program, dtsMapper: DtsMapper): NgccReflectionHost {
     switch (format) {
       case 'esm2015':
+        return new Esm2015ReflectionHost(program.getTypeChecker(), dtsMapper);
       case 'fesm2015':
         return new Fesm2015ReflectionHost(program.getTypeChecker());
       case 'esm5':
