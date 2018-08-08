@@ -14,7 +14,7 @@ import {DtsFileTransformer} from '../../../ngtsc/transform';
 
 import {AnalyzedFile, Analyzer} from '../analyzer';
 import {IMPORT_PREFIX} from '../constants';
-import {Esm2015ReflectionHost} from '../host/esm2015_host';
+import {Fesm2015ReflectionHost} from '../host/fesm2015_host';
 import {Esm5ReflectionHost} from '../host/esm5_host';
 import {NgccReflectionHost} from '../host/ngcc_host';
 import {Esm2015FileParser} from '../parsing/esm2015_parser';
@@ -95,7 +95,7 @@ export class PackageTransformer {
     switch (format) {
       case 'esm2015':
       case 'fesm2015':
-        return new Esm2015ReflectionHost(program.getTypeChecker());
+        return new Fesm2015ReflectionHost(program.getTypeChecker());
       case 'esm5':
       case 'fesm5':
         return new Esm5ReflectionHost(program.getTypeChecker());
