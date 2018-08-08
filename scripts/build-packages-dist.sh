@@ -54,6 +54,6 @@ IVY_JIT_TARGETS=`bazel query --output=label 'attr("tags", "\[.*ivy-jit.*\]", //p
 IVY_LOCAL_TARGETS=`bazel query --output=label 'attr("tags", "\[.*ivy-local.*\]", //packages/...) intersect kind(".*_package", //packages/...)'`
 
 buildTargetPackages "$LEGACY_TARGETS" "dist/packages-dist" "legacy" "Production"
-buildTargetPackages "$IVY_JIT_TARGETS" "dist/packages-dist-ivy-jit" "jit" "Ivy JIT"
-buildTargetPackages "$IVY_LOCAL_TARGETS" "dist/packages-dist-ivy-local" "local" "Ivy AOT"
+#buildTargetPackages "$IVY_JIT_TARGETS" "dist/packages-dist-ivy-jit" "jit" "Ivy JIT"
+#buildTargetPackages "$IVY_LOCAL_TARGETS" "dist/packages-dist-ivy-local" "local" "Ivy AOT"
 
