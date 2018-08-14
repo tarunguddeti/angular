@@ -116,3 +116,4 @@ export interface ControlValueAccessor {
  *
  */
 export const NG_VALUE_ACCESSOR = new InjectionToken<ControlValueAccessor>('NgValueAccessor');
+console.log(NG_VALUE_ACCESSOR);
